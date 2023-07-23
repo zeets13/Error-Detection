@@ -1,0 +1,52 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int hamming(string code) {
+  int size = code.length() - 1;
+  string error;
+
+  for (int r = 1; r <= size; r = r * 2)
+  {
+    int one = 0;
+
+    for (int p = r; p <= size; p = p + 2 * r) {
+      for (int k = 0; k < r; k++) {
+        if (p + k > size)break;
+        if (code[p + k] == '1')one++;
+      }
+    }
+
+    if (one % 2 == 1)error.push_back('1');
+    else error.push_back('0');
+  }
+
+  int size2 = error.length();
+  int n = 0;
+  for (int i = 0; i < size2; ++i)
+  {
+    if (error[i] == '1')n += pow(2, i);
+  }
+
+  return n;
+}
+
+int main() {
+  string code;
+  cin >> code;
+
+  code.push_back('0');
+  reverse(code.begin(), code.end());
+
+  int position = hamming(code);
+
+  if (code[position] == '1')code[position] = '0';
+  else code[position] = '1';
+
+  code.erase(0, 1);
+  reverse(code.begin(), code.end());
+
+  cout << "Position : " << position << endl;
+  cout << "Hamming Code : " << code << endl;
+
+  return 0;
+}
